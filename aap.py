@@ -47,3 +47,22 @@ Answer:
         "temperature": 0.7
     }
 )
+    response = model.generate_text(
+    prompt=f"""
+You are Student AI Assistant.
+Provide complete solutions.
+Do not give short answers.
+Explain step by step with examples, code (if needed), and conclusion.
+
+Question:
+{question}
+
+Detailed Answer:
+""",
+    params={
+        "max_new_tokens": 2000,
+        "temperature": 0.5
+    }
+)
+
+st.write(response)
