@@ -31,3 +31,19 @@ Question: {question}
     )
 
     st.success(response)
+    response = model.generate_text(
+    prompt=f"""
+You are a professional Student AI Assistant.
+Give detailed, clear and complete answers.
+Explain concepts with examples, steps and practical guidance.
+
+Student Question:
+{question}
+
+Answer:
+""",
+    params={
+        "max_new_tokens": 1000,
+        "temperature": 0.7
+    }
+)
