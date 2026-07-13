@@ -60,7 +60,7 @@ Question:
 Detailed Answer:
 """,
     params={
-        "max_new_tokens": 2000,
+        "max_new_tokens": 4000,
         "temperature": 0.5
     }
 )
