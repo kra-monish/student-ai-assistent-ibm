@@ -1,25 +1,33 @@
 import streamlit as st
+from ibm_watsonx_ai.foundation_models import ModelInference
+from ibm_watsonx_ai import Credentials
 
 st.set_page_config(page_title="Student AI Assistant")
 
 st.title("🎓 Student AI Assistant")
 
+# IBM Credentials
+credentials = Credentials(
+    api_key=st.secrets["IBM_API_KEY"],
+    url="https://us-south.ml.cloud.ibm.com"
+)
+
+model = ModelInference(
+    model_id="ibm/granite-4-h-small",
+    credentials=credentials,
+    project_id=st.secrets["PROJECT_ID"]
+)
+
 question = st.text_input("Ask your question")
 
 if question:
-    q = question.lower()
+    response = model.generate_text(
+        prompt=f"""
+You are a helpful Student AI Assistant.
+Help students with programming, AI and career guidance.
 
-    if "python" in q:
-        st.success("Python is a high-level programming language used in AI, Web Development, Data Science and Automation.")
+Question: {question}
+"""
+    )
 
-    elif "ai" in q or "artificial intelligence" in q:
-        st.success("Artificial Intelligence enables computers to learn, reason and solve problems like humans.")
-
-    elif "machine learning" in q:
-        st.success("Machine Learning is a branch of AI where computers learn from data without being explicitly programmed.")
-
-    elif "career" in q:
-        st.success("Focus on DSA, Projects, GitHub, Resume and Internships to build a strong software career.")
-
-    else:
-        st.success("Thank you for your question. This Student AI Assistant can help with Programming, AI and Career Guidance.")
+    st.success(response)
